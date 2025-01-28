@@ -1,17 +1,20 @@
-mod model;
-mod training;
 mod data;
 mod inference;
+mod model;
+mod training;
 
 use crate::{model::ModelConfig, training::TrainingConfig};
 use burn::{
-    backend::{Autodiff, ndarray::{NdArray, NdArrayDevice}},
+    backend::{
+        ndarray::{NdArray, NdArrayDevice},
+        Autodiff,
+    },
+    data::dataloader::Dataset,
     optim::AdamConfig,
-    data::dataloader::Dataset
 };
 fn main() {
     type MyBackend = NdArray<f32, i32>;
-    type MyAutoDiffBackend = Autodiff<MyBackend>;
+    // type MyAutoDiffBackend = Autodiff<MyBackend>;
 
     let device = NdArrayDevice::default();
     let artifact_dir = "./data";
@@ -25,6 +28,8 @@ fn main() {
     crate::inference::infer::<MyBackend>(
         artifact_dir,
         device,
-        burn::data::dataset::vision::MnistDataset::test().get(7).unwrap(),
+        burn::data::dataset::vision::MnistDataset::test()
+            .get(90)
+            .unwrap(),
     );
 }
