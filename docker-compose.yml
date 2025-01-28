@@ -1,0 +1,6 @@
+services:
+  rust-app:
+    image: rust:1.82
+    working_dir: /usr/src/
+    volumes:
+      - .:/usr/src/
